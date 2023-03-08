@@ -1,15 +1,24 @@
-use scraper::{Html, Selector};
-use std::error::Error;
+pub fn is_valid(input: &str) -> bool {
+    // Initialize a counter for open brackets
+    let mut open_brackets = 0;
 
-pub async fn get_temperature(zip_code: &str) -> Result<String, Box<dyn Error>> {
-    let url = format!("https://weather.com/weather/today/l/{}", zip_code);
-    let response = reqwest::get(&url).await?;
-    let body = response.text().await?;
+    // Check whether the string has an equal number of open and closed brackets
+    let mut valid_string = true;
+    for c in input.chars() {
+        match c {
+            '(' => open_brackets += 1,
+            ')' => {
+                if open_brackets == 0 {
+                    valid_string = false;
+                    break;
+                } else {
+                    open_brackets -= 1;
+                }
+            },
+            _ => continue,
+        }
+    }
 
-    let document = Html::parse_document(&body);
-    let selector = Selector::parse(".CurrentConditions--tempValue--3KcTQ").unwrap();
-    let temperature = document.select(&selector).next().unwrap().text().collect::<String>();
-
-    Ok(temperature)
+    valid_string && open_brackets == 0
 }
 

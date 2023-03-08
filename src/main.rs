@@ -1,19 +1,17 @@
-use Week7_Rust_ds581::get_temperature;
-use std::env;
+use std::io;
+use week7_rust_ds581::is_valid;
 
-#[tokio::main]
-async fn main() {
-    let args: Vec<String> = env::args().collect();
+fn main() {
+    // Prompt the user to enter a string containing brackets
+    println!("Please enter a string containing brackets:");
+    let mut input = String::new();
+    io::stdin().read_line(&mut input).expect("Failed to read line");
 
-    if args.len() != 2 {
-        eprintln!("Usage: {} <zip-code>", args[0]);
-        return;
-    }
-
-    let zip_code = &args[1];
-    match get_temperature(zip_code).await {
-        Ok(temperature) => println!("Current temperature for {} is {}.", zip_code, temperature),
-        Err(e) => eprintln!("Error: {}", e),
+    // Check whether the string is valid
+    if is_valid(&input) {
+        println!("The string is a valid string. Each open bracket has a corresponding close bracket");
+    } else {
+        println!("The string is either invalid or does not have an equal number of open and closed brackets.");
     }
 }
 
