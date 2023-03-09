@@ -1,3 +1,4 @@
+[![Rust](https://github.com/nogibjj/Week7_Rust_ds581/actions/workflows/rust.yml/badge.svg)](https://github.com/nogibjj/Week7_Rust_ds581/actions/workflows/rust.yml)
 # Week7_Rust_ds581
 
 ## Valid Parentheses checker
